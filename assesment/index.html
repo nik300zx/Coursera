@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
     <title>Matching Game</title>
     <meta charset="UTF-8">
@@ -9,37 +9,59 @@
 
         #rightSide {position: absolute; border-left: 1px solid grey; width: 500px; height: 500px; margin-left: 500px;}
         #leftSide {position: absolute; width: 500px; height: 500px;}
-
+        img {position: absolute;}
     </style>
 
     <script>
-    var numberOfFaces = 5;
-    var theLeftSide = document.getElementById("leftside");
-    var topPosition = Math.random()*400;
-        topPosition =Math.floor(topPosition);
-    var leftPosition = Math.random()*400;
-        leftPosition =Math.floor(leftPosition);
+
+
 
         function generateFaces(){
+            var numberOfFaces = 5;
+
             for (i=0; i< numberOfFaces; i++) {
+                var theLeftSide = document.getElementById("leftSide");
+
                 var smile = document.createElement("img");
                     smile.src = "img/smile.png";
-                    smile.style.top = topPosition;
-                    smile.style.left = leftPosition;
+                var topPosition = Math.random()*400;
+                    topPosition = Math.floor(topPosition);
+                var leftPosition = Math.random()*400;
+                    leftPosition = Math.floor(leftPosition);
+                    smile.style.top = topPosition + "px";
+                    smile.style.left = leftPosition + "px";
 
                 theLeftSide.appendChild(smile);
+                var theRightSide = document.getElementById("rightSide");
+                var leftSideImages = theLeftSide.cloneNode(true);
+                leftSideImages.removeChild(leftSideImages.lastChild);
+                theRightSide.appendChild(leftSideImages);
 
             }
+            var theBody = document.getElementsByTagName("body")[0];
+
+            theLeftSide.lastChild.onclick = function nextLevel(event){
+                        event.stopPropagation();
+                        while(theBody.firstChild) {
+                        theBody.removeChild(theBody.firstChild);}
+                        numberOfFaces += 5;
+                        generateFaces();
+                };
+            theBody.onclick = function gameOver() {
+            theBody.style.background = "red";
+                    alert("Game Over!");
+            theBody.onclick = null;
+            theLeftSide.lastChild.onclick = null;
+            };
         }
 
     </script>
 
 
 </head>
-<body olnload = "generateFaces()">
+<body onload = "generateFaces()">
 <h1>Matching Game</h1>
 <p>Click on the extra smiling face on the left.</p>
-<img src="img/smile.png">
 <div id="leftSide"></div>
 <div id="rightSide"></div>
 
