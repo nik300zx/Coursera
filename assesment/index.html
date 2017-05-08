@@ -6,7 +6,7 @@
 
     <style>
 
-
+        #text {margin-left: 380px; }
         #rightSide {position: absolute; border-left: 1px solid grey; width: 500px; height: 500px; margin-left: 500px;}
         #leftSide {position: absolute; width: 500px; height: 500px;}
         img {position: absolute;}
@@ -14,10 +14,10 @@
 
     <script>
 
-
+        var numberOfFaces = 5;
 
         function generateFaces(){
-            var numberOfFaces = 5;
+
 
             for (i=0; i< numberOfFaces; i++) {
                 var theLeftSide = document.getElementById("leftSide");
@@ -31,25 +31,29 @@
                     smile.style.top = topPosition + "px";
                     smile.style.left = leftPosition + "px";
 
-                theLeftSide.appendChild(smile);
+                    theLeftSide.appendChild(smile);
+
                 var theRightSide = document.getElementById("rightSide");
                 var leftSideImages = theLeftSide.cloneNode(true);
-                leftSideImages.removeChild(leftSideImages.lastChild);
-                theRightSide.appendChild(leftSideImages);
+                    leftSideImages.removeChild(leftSideImages.lastChild);
+                    theRightSide.appendChild(leftSideImages);
 
             }
             var theBody = document.getElementsByTagName("body")[0];
 
             theLeftSide.lastChild.onclick = function nextLevel(event){
                         event.stopPropagation();
-                        while(theBody.firstChild) {
-                        theBody.removeChild(theBody.firstChild);}
+                        while(theRightSide.firstChild) {
+                              theRightSide.removeChild(theRightSide.firstChild);}
+                        while(theLeftSide.firstChild) {
+                            theLeftSide.removeChild(theLeftSide.firstChild);}
+
                         numberOfFaces += 5;
                         generateFaces();
                 };
             theBody.onclick = function gameOver() {
             theBody.style.background = "red";
-                    alert("Game Over!");
+                    alert("GAME  OVER!!!!!!!!");
             theBody.onclick = null;
             theLeftSide.lastChild.onclick = null;
             };
@@ -60,8 +64,9 @@
 
 </head>
 <body onload = "generateFaces()">
+<div id="text">
 <h1>Matching Game</h1>
-<p>Click on the extra smiling face on the left.</p>
+<p>Click on the extra smiling face on the left.</p></div>
 <div id="leftSide"></div>
 <div id="rightSide"></div>
 
